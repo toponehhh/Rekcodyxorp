@@ -1,5 +1,7 @@
 # Docker Hub Cloudflare Workers 代理
 
+[English](README.en.md) | 简体中文
+
 这是一个只支持拉取（`GET` / `HEAD`）的 Docker Registry V2 反向代理。它会：
 
 - 将 `/v2/*` 流式转发到 `registry-1.docker.io`；
@@ -21,7 +23,7 @@ npx wrangler login
 npm run deploy
 ```
 
-部署成功后 Wrangler 会输出一个 `https://docker-hub-proxy.<你的子域>.workers.dev` 地址。国内网络下 `workers.dev` 本身可能不稳定，实际使用建议在 Cloudflare 中给 Worker 绑定自己的域名，例如 `docker.example.com`。
+部署成功后 Wrangler 会输出一个 `https://dhp.<你的子域>.workers.dev` 地址。国内网络下 `workers.dev` 本身可能不稳定，实际使用建议在 Cloudflare 中给 Worker 绑定自己的域名，例如 `docker.example.com`。
 
 可以在 Cloudflare Dashboard 的 Worker 设置中添加 Custom Domain，也可以在 `wrangler.jsonc` 顶层加入：
 
