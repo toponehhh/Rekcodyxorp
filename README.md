@@ -29,13 +29,13 @@ npx wrangler pages project create dhp --production-branch main
 
 也可以在 Cloudflare Dashboard 中创建名为 `dhp` 的 **Direct Upload** Pages 项目，生产分支填写 `main`。
 
-项目默认生产地址为：
+当前项目实际分配的生产地址为：
 
 ```text
-https://dhp.pages.dev
+https://dhp-1n2.pages.dev
 ```
 
-如果 `dhp` 已被占用，请同时修改 `wrangler.jsonc` 中的 `name`，然后使用相同的新名称创建 Pages 项目。
+Cloudflare 分配的 `pages.dev` 子域名可能带有后缀，并不一定与项目名完全一致。自行创建项目时，请以 Wrangler 输出或 Pages 控制台中的地址为准，并替换以下示例中的域名。
 
 ### 2. 创建 Cloudflare API Token
 
@@ -80,7 +80,7 @@ Settings → Secrets and variables → Actions → New repository secret
 先验证健康检查：
 
 ```bash
-curl -i https://dhp.pages.dev/
+curl -i https://dhp-1n2.pages.dev/
 ```
 
 应返回 `200`，JSON 中包含：
@@ -92,19 +92,19 @@ curl -i https://dhp.pages.dev/
 再验证 Registry 握手：
 
 ```bash
-curl -i https://dhp.pages.dev/v2/
+curl -i https://dhp-1n2.pages.dev/v2/
 ```
 
 正常结果通常是 `401 Unauthorized`，且 `WWW-Authenticate` 中的 `realm` 应指向：
 
 ```text
-https://dhp.pages.dev/token
+https://dhp-1n2.pages.dev/token
 ```
 
 最后实际拉取一个小镜像：
 
 ```bash
-docker pull dhp.pages.dev/library/alpine:latest
+docker pull dhp-1n2.pages.dev/library/alpine:latest
 ```
 
 ## 配置 Docker 镜像加速
@@ -113,7 +113,7 @@ Linux 上编辑 `/etc/docker/daemon.json`：
 
 ```json
 {
-  "registry-mirrors": ["https://dhp.pages.dev"]
+  "registry-mirrors": ["https://dhp-1n2.pages.dev"]
 }
 ```
 
@@ -132,7 +132,7 @@ Docker Desktop 可在 **Settings → Docker Engine** 中加入相同配置并重
 代理不会保存凭据。拉取 Docker Hub 私有镜像时，对代理域名登录：
 
 ```bash
-docker login dhp.pages.dev
+docker login dhp-1n2.pages.dev
 ```
 
 Docker 客户端提交给 `/token` 的 Basic 凭据会通过 HTTPS 转发给 `auth.docker.io`，返回的短期 Bearer Token 再用于拉取。
