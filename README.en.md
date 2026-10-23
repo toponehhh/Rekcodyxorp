@@ -19,20 +19,20 @@ Response bodies are forwarded as `ReadableStream`s, so complete image layers are
 
 ### 1. Create the Cloudflare Pages project
 
-The Pages project name must match `name` in `wrangler.jsonc`, currently `dhp`. Create it once:
+The Pages project name must match `name` in `wrangler.jsonc`, currently `dhpc`. Create it once:
 
 ```bash
 npm install
 npx wrangler login
-npx wrangler pages project create dhp --production-branch main
+npx wrangler pages project create dhpc --production-branch main
 ```
 
-Alternatively, create a **Direct Upload** Pages project named `dhp` in the Cloudflare Dashboard and set its production branch to `main`.
+Alternatively, create a **Direct Upload** Pages project named `dhpc` in the Cloudflare Dashboard and set its production branch to `main`.
 
 The production URL assigned to the current project is:
 
 ```text
-https://dhp-1n2.pages.dev
+https://dhpc.pages.dev
 ```
 
 Cloudflare may add a suffix to the `pages.dev` subdomain, so it may differ from the project name. When creating your own project, use the URL printed by Wrangler or shown in the Pages dashboard and replace the domain in the examples below.
@@ -75,7 +75,7 @@ You can also run it manually from **Actions → Deploy Cloudflare Pages → Run 
 Check the health endpoint:
 
 ```bash
-curl -i https://dhp-1n2.pages.dev/
+curl -i https://dhpc.pages.dev/
 ```
 
 It should return `200` with JSON containing:
@@ -87,19 +87,19 @@ It should return `200` with JSON containing:
 Check the Registry handshake:
 
 ```bash
-curl -i https://dhp-1n2.pages.dev/v2/
+curl -i https://dhpc.pages.dev/v2/
 ```
 
 A normal response is usually `401 Unauthorized`, with the `realm` in `WWW-Authenticate` pointing to:
 
 ```text
-https://dhp-1n2.pages.dev/token
+https://dhpc.pages.dev/token
 ```
 
 Finally, pull a small image:
 
 ```bash
-docker pull dhp-1n2.pages.dev/library/alpine:latest
+docker pull dhpc.pages.dev/library/alpine:latest
 ```
 
 ## Configure Docker as a registry mirror
@@ -108,7 +108,7 @@ On Linux, edit `/etc/docker/daemon.json`:
 
 ```json
 {
-  "registry-mirrors": ["https://dhp-1n2.pages.dev"]
+  "registry-mirrors": ["https://dhpc.pages.dev"]
 }
 ```
 
@@ -127,7 +127,7 @@ For Docker Desktop, add the same `registry-mirrors` setting under **Settings →
 The proxy does not store credentials. To pull a private Docker Hub image, log in to the proxy domain:
 
 ```bash
-docker login dhp-1n2.pages.dev
+docker login dhpc.pages.dev
 ```
 
 The Docker client sends Basic credentials to `/token`; the proxy forwards them over HTTPS to `auth.docker.io`, and the returned short-lived Bearer Token is then used for image pulls.

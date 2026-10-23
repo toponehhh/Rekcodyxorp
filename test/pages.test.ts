@@ -11,7 +11,7 @@ describe("Cloudflare Pages Functions adapter", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     const response = await onRequest({
-      request: new Request("https://dhp.pages.dev/"),
+      request: new Request("https://dhpc.pages.dev/"),
       env: {},
     });
 
@@ -25,7 +25,7 @@ describe("Cloudflare Pages Functions adapter", () => {
 
   it("uses Pages environment variables for access restrictions", async () => {
     const response = await onRequest({
-      request: new Request("https://dhp.pages.dev/v2/", {
+      request: new Request("https://dhpc.pages.dev/v2/", {
         headers: { "cf-connecting-ip": "198.51.100.8" },
       }),
       env: { ALLOWED_IPS: "203.0.113.10" },
